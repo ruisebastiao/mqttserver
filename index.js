@@ -63,7 +63,7 @@ var count = 0;
 // fired when a message is received
 server.on('published', function(packet, client) {
     count++;
-    console.log(count + ':Published', packet.topic, packet.payload);
+    console.log(count + ':Published', packet.topic, packet.payload.toString());
 });
 
 // fired when the mqtt server is ready
