@@ -12,5 +12,10 @@
   },
   "author": "DreamForIt",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/dreamforit/mqttserver#readme"
+  "homepage": "https://bitbucket.org/dreamforit/mqttserver#readme",
+  "dependencies": {
+    "localtunnel": "^1.8.2",
+    "mosca": "^2.2.0",
+    "ngrok": "^2.2.6"
+  }
 }
