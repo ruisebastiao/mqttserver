@@ -1,45 +1,48 @@
-var express = require('express');
-var http = require('http');
-var mosca = require('mosca');
+// var express = require('express');
+// var http = require('http');
+// var mosca = require('mosca');
 
-var app = express();
+// var app = express();
+// var server = http.createServer(app);
 
-app.set('port', (process.env.PORT || 5000))
+// // var pubsubsettings = {
+// //     type: 'mongo',
+// //     url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/app',
+// //     pubsubCollection: 'mqtt',
+// //     mongo: {}
+// // };
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'))
-})
+// var broker = new mosca.Server({
 
-//var server = http.createServer(app);
+//     persistence: {
+//         factory: mosca.persistence.Memory
+//     }
+//     //backend: pubsubsettings,
+//     // persistence: {
+//     //     factory: mosca.persistence.Mongo,
+//     //     url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/app'
+//     // }
+// }, function() {
+//     broker.attachHttpServer(app);
+// });
 
-// var pubsubsettings = {
-//     type: 'mongo',
-//     url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/app',
-//     pubsubCollection: 'mqtt',
-//     mongo: {}
-// };
-
-var server = new mosca.Server({
-
-    persistence: {
-        factory: mosca.persistence.Memory
+var mosca = require("mosca");
+var broker = new mosca.Server({
+    http: {
+        port: process.env.PORT || 5000,
+        bundle: true,
+        static: './'
     }
-    //backend: pubsubsettings,
-    // persistence: {
-    //     factory: mosca.persistence.Mongo,
-    //     url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/app'
-    // }
-}, function() {
-    server.attachHttpServer(app);
 });
 
 
-server.on('clientConnected', function(client) {
+
+broker.on('clientConnected', function(client) {
     console.log('client connected', client.id);
 });
 
 
-server.on('clientDisconnected', function(client) {
+broker.on('clientDisconnected', function(client) {
     count = 0;
     console.log('client disconnect', client.id);
 });
@@ -48,11 +51,11 @@ server.on('clientDisconnected', function(client) {
 var count = 0;
 
 // fired when a message is received
-server.on('published', function(packet, client) {
+broker.on('published', function(packet, client) {
     count++;
     console.log(count + ':Published', packet.topic, packet.payload.toString());
 });
 
-server.on('ready', function() {
+broker.on('ready', function() {
     console.log('Mosca is running');
 });
