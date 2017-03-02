@@ -1,15 +1,14 @@
-var mosca = require('mosca');
+var mosca = require("mosca");
+var moscaserver = new mosca.Server({
+  http: {
+    port: 8080,
+    bundle: true,
+    static: './'
+  }
+});
 
 
-var settings = {
-    port: process.env.OPENSHIFT_NODEJS_PORT || 8080
-};
-
-
-console.log("Started at port:"+settings.port);
-
-
-var moscaserver = new mosca.Server(settings);
+//var moscaserver = new mosca.Server(settings);
 moscaserver.on('ready', setup);
 
 moscaserver.on('clientConnected', function(client) {
