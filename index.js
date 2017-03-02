@@ -2,9 +2,11 @@ var mosca = require('mosca');
 
 
 var settings = {
-    port: 1883
+    port: process.env.OPENSHIFT_NODEJS_PORT || 8080
 };
 
+
+console.log("Started at port:"+settings.port);
 
 
 var moscaserver = new mosca.Server(settings);
