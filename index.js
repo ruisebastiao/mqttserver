@@ -3,7 +3,14 @@ var http = require('http');
 var mosca = require('mosca');
 
 var app = express();
-var server = http.createServer(app);
+
+app.set('port', (process.env.PORT || 5000))
+
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'))
+})
+
+//var server = http.createServer(app);
 
 // var pubsubsettings = {
 //     type: 'mongo',
