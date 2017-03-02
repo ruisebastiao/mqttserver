@@ -2,7 +2,7 @@ var mosca = require('mosca');
 
 
 var settings = {
-    port: 8080
+    port: 1883
 };
 
 
