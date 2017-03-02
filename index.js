@@ -27,9 +27,13 @@
 // });
 
 var mosca = require("mosca");
+var port= process.env.PORT;
+
+console.log(port);
+
 var broker = new mosca.Server({
     http: {
-        port: process.env.PORT || 5000,
+        port:port || 5000,
         bundle: true,
         static: './'
     }
